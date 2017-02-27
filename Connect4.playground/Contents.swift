@@ -3,7 +3,4 @@
 //:
 //: ![Connect4](Connect_Four.gif)
 import Foundation
-let r = Int(arc4random()%(7-1) + 1)
-for i in 1...10 {
-    print(r)
-}
+main()
