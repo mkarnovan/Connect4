@@ -55,21 +55,22 @@ public class Board {
     }
     
     public func toString()->String {
+        let numbers = [" 1️⃣ ", " 2️⃣ ", " 3️⃣ ", " 4️⃣ ", " 5️⃣ ", " 6️⃣ ", " 7️⃣ ", " 8️⃣ ", " 9️⃣ ", " 🔟 "]
         var res = ""
         for x in 0..<width {
-            res += " " + String(x+1) + " "
+            res += numbers[x]
         }
         res += "\n"
         for y in stride(from: height-1, to: -1, by: -1) {
             for x in 0..<width {
                 if(board[x][y]==player1){
-                    res += " X "
+                    res += " 🔴 "
                 }
                 else if(board[x][y]==player2){
-                    res += " O "
+                    res += " 🔵 "
                 }
                 else {
-                    res += " . "
+                    res += " ⚫️ "
                 }
             }
             res += "\n"
