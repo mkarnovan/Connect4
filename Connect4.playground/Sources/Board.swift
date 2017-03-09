@@ -1,6 +1,11 @@
 import Foundation
 
-public class Board {
+public protocol BoardProt: PrintableDeligate, Movable, ChekMove, GetWinner {}
+public protocol BoardDelegate: MultiplayerGameDelegate {}
+
+public class Board: BoardProt {
+    public let name = "Connect 4"
+    public var delegate: BoardDelegate?
     let player1 = 1
     let player2 = 2
     let nobody = 0
@@ -18,36 +23,27 @@ public class Board {
         }
     }
     
-    public func isValidMove(column: Int)->Bool{
+    public var players: [Player] = [BoardPlayer]()
+    
+    public func join (player: Player){
+    }
+    
+    
+    
+    public func isValidMove(_ column: Int)->Bool{
         return (columnCounts[column] < height)
     }
     
-    public func makeMovePlayer1(column: Int) {
-        makeMove(column: column, player: true)
-    }
-    
-    public func makeMovePlayer2(column: Int){
-       makeMove(column: column, player: false)
+    public func makeMovePlayer(column: Int, player: Bool) {
+        makeMove(column: column, player: player)
     }
     
     public func makeMove(column: Int, player: Bool){
-        if isValidMove(column: column) {
+        if isValidMove(column) {
             let sign = player ? player1:player2
             board[column][columnCounts[column]] = sign
             columnCounts[column] += 1
         }
-    }
-    
-    public func undoMove(column: Int, player: Bool)->Bool {
-        if(columnCounts[column]>0){
-            let sign = player ? player1 : player2
-            if(board[column][columnCounts[column]-1] == sign){
-                board[column][columnCounts[column]-1] = nobody
-                columnCounts[column] -= 1
-                return true
-            }
-        }
-        return false
     }
     
     public func getWidth()->Int {
@@ -76,10 +72,6 @@ public class Board {
             res += "\n"
         }
         return res
-    }
-    
-    public func hasWinner()->Bool {
-        return (getWinner() != nobody)
     }
     
     public func getWinner()->Int {
@@ -171,11 +163,4 @@ public class Board {
      return nobody
     }
     
-    public func player1IsWinner()->Bool {
-        return (getWinner() == player1)
-    }
-    
-    public func player2IsWinner()->Bool {
-        return (getWinner() == player2)
-    }
 }

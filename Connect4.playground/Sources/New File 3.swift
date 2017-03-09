@@ -12,7 +12,7 @@ public func step(name:String, t: inout Bool, c: inout Int, b: inout Board){
     repeat{
         t = true
         for i in 0...b.getWidth()-1 {
-            t = t && !b.isValidMove(column: i)
+            t = t && !b.isValidMove(i)
         }
         if(t){
             break
@@ -20,17 +20,13 @@ public func step(name:String, t: inout Bool, c: inout Int, b: inout Board){
         let move = Int(arc4random_uniform(7) + 1)
         print("\(name) move is: \(move)\n")
         c = getInput(from: 1, to: b.getWidth(), number: move) - 1
-        if(!b.isValidMove(column: c)){
+        if(!b.isValidMove(c)){
             print("You cannot place in this column!\n")
         }
         
-    }while(!b.isValidMove(column: c))
-    if(name == "Andrew"){
-        b.makeMovePlayer1(column: c)
-    }
-    else {
-        b.makeMovePlayer2(column: c)
-    }
+    }while(!b.isValidMove(c))
+    
+    b.makeMovePlayer(column: c, player: (name == "Andrew"))
 }
 
 
@@ -64,6 +60,6 @@ public func main() {
         print("It's a tie")
         return
     }
-    board.player1IsWinner() ? print("Andrew win") : print("John win")
+    board.whoWin() == 1 ? print("Andrew win") : print("John win")
     
 }

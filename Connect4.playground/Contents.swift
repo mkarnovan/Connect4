@@ -3,4 +3,5 @@
 //:
 //: ![Connect4](Connect_Four.gif)
 import Foundation
+let game = Board(height: 6, width: 7, winlength: 4)
 main()
